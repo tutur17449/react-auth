@@ -52,8 +52,15 @@ exports.userLogin = (req, res) => {
                         sendApiErrorResponse(res, 422, err, 'Le mot de passe ne correspond pas.')
                     } else {
                         let token = jwt.sign(user,secretJwt,{ expiresIn: 86400000  })
-                        let cookie = req.cookies[process.env.COOKIE_NAME]   
-                        if (cookie === undefined || cookie === null || typeof cookie === 'undefined') {
+                        //let cookie = req.cookies[process.env.COOKIE_NAME]   
+                        if(process.env.NODE_ENV === 'prod'){
+                            res.cookie(process.env.COOKIE_NAME, token, { maxAge: 86400000 , httpOnly: true, secure: true, domain: 'objectif-regime.ahl-app.fr'})
+                            sendApiSuccessResponse(res, 200, user, 'Utilisateur connecté.') 
+                        } else {
+                            res.cookie(process.env.COOKIE_NAME, token, { maxAge: 86400000 , httpOnly: true})
+                            sendApiSuccessResponse(res, 200, user, 'Utilisateur connecté.')     
+                        }
+/*                         if (cookie === undefined || cookie === null || typeof cookie === 'undefined') {
                             if(process.env.NODE_ENV === 'prod'){
                                 res.cookie(process.env.COOKIE_NAME, token, { maxAge: 86400000 , httpOnly: true, secure: true, domain: 'objectif-regime.ahl-app.fr'})
                                 sendApiSuccessResponse(res, 200, user, 'Utilisateur connecté.') 
@@ -63,7 +70,7 @@ exports.userLogin = (req, res) => {
                             }
                         } else {
                             sendApiErrorResponse(res, 422, err, 'Connexion impossible, l\'utilisateur est déjà connecté.')
-                        } 
+                        }  */
                     }
                 }
             })             
@@ -94,7 +101,7 @@ exports.userMe = (req, res) => {
 exports.userLogout = (req, res, next) => {
     try{
         if(process.env.NODE_ENV === 'prod'){
-            res.clearCookie(process.env.COOKIE_NAME, {path: '/', domain: '.objectif-regime.ahl-app.fr'})
+            res.clearCookie(process.env.COOKIE_NAME, {path: '/', domain: '.YOUR DOMAIN'})
             sendApiSuccessResponse(res, 200, 'Déconnecté', 'Utilisateur déconnecté avec succès !') 
         } else {
             res.clearCookie(process.env.COOKIE_NAME)

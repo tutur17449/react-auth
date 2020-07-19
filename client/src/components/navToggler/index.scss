@@ -1,0 +1,43 @@
+.hamburger {
+    display: none;
+    @media(max-width: 768px) {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        justify-self: flex-end;
+        margin-right: 20px;
+
+        .barrehamburger {
+            width: 25px;
+            height: 2px;
+            background-color: #000;
+            margin: 3px 2px;
+            transition: all .2s;
+        }
+        .barrehamburger:first-child {
+            width: 12px;
+        }
+        .barrehamburger:last-child {
+            width: 12px;
+        }
+    }
+}
+
+@media(max-width: 768px) {
+    .hamburger.hamburger-ouvert {
+        transform: translateX(6px);
+    }
+    .hamburger.hamburger-ouvert .barrehamburger {
+        width: 0px;
+    }
+    .hamburger.hamburger-ouvert .barrehamburger:first-child {
+        width: 25px;
+        transform: rotate(45deg) translateY(12px);
+    }
+    .hamburger.hamburger-ouvert .barrehamburger:last-child {
+        width: 25px;
+        transform: rotate(-45deg) translateY(-11.5px);
+    }
+}
+
+

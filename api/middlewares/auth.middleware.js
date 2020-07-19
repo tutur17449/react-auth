@@ -22,7 +22,7 @@ const authJwt = (passport) => {
                 return done(err, false)
             }
             if (data) { 
-                return done(null, {_id: data._id, role: data.role, pseudo: data.pseudo, rpqtd: data.rpqtd}) 
+                return done(null, {_id: data._id, pseudo: data.pseudo}) 
             }
             else { 
                 return done(null, false) 

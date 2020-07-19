@@ -1,21 +1,50 @@
-import Cookies from 'js-cookie'
+import fetcher from '../tools/fetcher'
 
-class AuthServiceClass {
-    checkAuth(){
-   
+const checkAuth = async () => {
+    const config = {
+        method: 'GET',
+        credentials: 'include',
     }
 
-    login(data){
-
-    }
-
-    register(data){
-
-    }
-
-    logout(){
-
-    }
+    const checkUser = await fetcher(`${process.env.REACT_APP_API_URL}api/auth/me`, config)
+    return checkUser
 }
 
-export default new AuthServiceClass()
+const login = async (data) => {
+    const config = {
+        method: 'POST',
+        credentials: 'include',
+        headers: {
+            'Content-type': 'application/json'
+        },
+        body: JSON.stringify(data)
+    }
+
+    const loginUser = await fetcher(`${process.env.REACT_APP_API_URL}api/auth/login`, config)
+    return loginUser
+}
+
+const register = async (data) => {
+    const config = {
+        method: 'POST',
+        headers: {
+            'Content-type': 'application/json'
+        },
+        body: JSON.stringify(data)
+    }
+
+    const registerUser = await fetcher(`${process.env.REACT_APP_API_URL}api/auth/register`, config)
+    return registerUser
+}
+
+const logout = async () => {
+    const config = {
+        method: 'GET',
+        credentials: 'include',
+    }
+
+    const logoutUser = await fetcher(`${process.env.REACT_APP_API_URL}api/auth/logout`, config)
+    return logoutUser
+}
+
+export {checkAuth, login, register, logout}
