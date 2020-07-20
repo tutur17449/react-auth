@@ -1,8 +1,9 @@
 import React from 'react'
 import Navbar from '../components/navbar/index'
 import Footer from '../components/footer/index'
+import withAuth from '../hoc/withAuth'
 
-export default function PrivateRoute(){
+function PrivateRoute(){
     return(
         <React.Fragment>
             <Navbar />
@@ -11,3 +12,7 @@ export default function PrivateRoute(){
         </React.Fragment>
     )
 }
+
+PrivateRoute = withAuth(PrivateRoute)
+
+export default PrivateRoute
