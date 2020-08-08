@@ -6,8 +6,10 @@ import {
     FormGroup, Label, Input,
     Button,
 } from 'reactstrap';
-import {login} from '../services/auth.service'
+import {login} from '../actions/auth.actions'
 import { toast } from 'react-toastify'
+import useAuth from '../global/useAuth'
+import  { Redirect } from 'react-router-dom'
 
 toast.configure()
 
@@ -15,6 +17,7 @@ export default function Login() {
 
     const [email, setEmail] = React.useState('')
     const [password, setPassword] = React.useState('')
+    const {auth, setAuth, setToken} = useAuth()
 
     const onSubmit = async (e) => {
         e.preventDefault()
@@ -25,13 +28,21 @@ export default function Login() {
 
         try {
             const response = await login(signInData)
-            toast.success('Sign in OK')
-            setTimeout(() => {
-                window.location.href = '/'
-            }, 1000)
+            setAuth({
+                isAuth: true,
+                user: {
+                    email: response.data.email,
+                    pseudo: response.data.pseudo
+                },
+                role: "user"
+            })
         } catch (e) {
             toast.error(e.message)
         }
+    }
+
+    if(auth.isAuth){
+        return(<Redirect to='/'  />)
     }
 
     return (

@@ -46,31 +46,22 @@ exports.userLogin = (req, res) => {
                         id: data._id,
                         role: data.role,
                         pseudo: data.pseudo,
+                        email: data.email
                     }
                     const validPwd = bcrypt.compareSync(req.body.password, data.password);
                     if (!validPwd) {
                         sendApiErrorResponse(res, 422, err, 'Le mot de passe ne correspond pas.')
                     } else {
                         let token = jwt.sign(user,secretJwt,{ expiresIn: 86400000  })
-                        //let cookie = req.cookies[process.env.COOKIE_NAME]   
                         if(process.env.NODE_ENV === 'prod'){
                             res.cookie(process.env.COOKIE_NAME, token, { maxAge: 86400000 , httpOnly: true, secure: true, domain: 'objectif-regime.ahl-app.fr'})
+                            res.cookie(process.env.COOKIE_CHECK, token, { maxAge: 86400000, secure: true})
                             sendApiSuccessResponse(res, 200, user, 'Utilisateur connecté.') 
                         } else {
                             res.cookie(process.env.COOKIE_NAME, token, { maxAge: 86400000 , httpOnly: true})
+                            res.cookie(process.env.COOKIE_CHECK, token, { maxAge: 86400000})
                             sendApiSuccessResponse(res, 200, user, 'Utilisateur connecté.')     
                         }
-/*                         if (cookie === undefined || cookie === null || typeof cookie === 'undefined') {
-                            if(process.env.NODE_ENV === 'prod'){
-                                res.cookie(process.env.COOKIE_NAME, token, { maxAge: 86400000 , httpOnly: true, secure: true, domain: 'objectif-regime.ahl-app.fr'})
-                                sendApiSuccessResponse(res, 200, user, 'Utilisateur connecté.') 
-                            } else {
-                                res.cookie(process.env.COOKIE_NAME, token, { maxAge: 86400000 , httpOnly: true})
-                                sendApiSuccessResponse(res, 200, user, 'Utilisateur connecté.')     
-                            }
-                        } else {
-                            sendApiErrorResponse(res, 422, err, 'Connexion impossible, l\'utilisateur est déjà connecté.')
-                        }  */
                     }
                 }
             })             

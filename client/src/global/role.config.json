@@ -1,0 +1,12 @@
+{
+    "visitor": [
+
+    ],
+    "user": [
+        "home:click",
+        "post:postsList"
+    ],
+    "admin": [
+
+    ]
+}

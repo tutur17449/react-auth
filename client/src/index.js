@@ -3,7 +3,7 @@ import { Switch, Route, BrowserRouter as Router } from 'react-router-dom'
 import Loader from './components/loader/index'
 import ReactDOM from 'react-dom'
 import * as serviceWorker from './serviceWorker'
-import { AuthProvider } from './context/auth'
+import { AuthProvider } from './global/useAuth'
 import 'bootstrap/scss/bootstrap.scss'
 import 'react-toastify/dist/ReactToastify.css'
 import './global.scss'
@@ -12,6 +12,7 @@ const Login = lazy(() => import('./pages/login'))
 const Register = lazy(() => import('./pages/register'))
 const PrivateRouteExample = lazy(() => import('./pages/privateRoute'))
 const PublicRouteExample = lazy(() => import('./pages/publicRoute'))
+const Post = lazy(() => import('./pages/post'))
 const NotFound = lazy(() => import('./pages/notFound'))
 
 
@@ -23,6 +24,7 @@ ReactDOM.render(
           <Route exact path="/" component={Home} />
           <Route path="/login" component={Login} />
           <Route path="/register" component={Register} />
+          <Route path="/post" component={Post} />
           <Route path="/private-route" component={PrivateRouteExample} />
           <Route path="/public-route" component={PublicRouteExample} />
           <Route component={NotFound} />

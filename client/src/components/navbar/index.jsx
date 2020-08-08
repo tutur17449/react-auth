@@ -1,6 +1,6 @@
 import React from 'react'
 import {Link} from 'react-router-dom'
-import useAuth from '../../context/auth'
+import useAuth from '../../global/useAuth'
 import {
     Collapse,
     Navbar,
@@ -37,13 +37,16 @@ export default function Menu() {
                 <Collapse isOpen={isOpen} navbar>
                     <Nav className="mr-auto" navbar>
                         <NavItem>
+                            <Link to="/post" className="nav-link">Post</Link>
+                        </NavItem>
+                        <NavItem>
                             <Link to="/public-route" className="nav-link">Public Route</Link>
                         </NavItem>
                         <NavItem>
                             <Link to="/private-route" className="nav-link">Private Route</Link>
                         </NavItem>
                     </Nav>
-                    <Link to="/logout" style={style} onClick={onLogout}>Logout</Link>
+                    <Link to="/" style={style} onClick={onLogout}>Logout</Link>
                 </Collapse>
             </Navbar>
         ) : (
@@ -55,6 +58,9 @@ export default function Menu() {
                 />
                 <Collapse isOpen={isOpen} navbar>
                     <Nav className="mr-auto" navbar>
+                        <NavItem>
+                            <Link to="/post" className="nav-link">Post</Link>
+                        </NavItem>
                         <NavItem>
                             <Link to="/public-route" className="nav-link">Public Route</Link>
                         </NavItem>

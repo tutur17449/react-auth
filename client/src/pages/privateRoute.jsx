@@ -1,7 +1,7 @@
 import React from 'react'
 import Navbar from '../components/navbar/index'
 import Footer from '../components/footer/index'
-import withAuth from '../hoc/withAuth'
+import withAuth from '../global/withAuth'
 
 function PrivateRoute(){
     return(

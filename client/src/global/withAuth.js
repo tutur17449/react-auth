@@ -1,5 +1,5 @@
 import React from 'react'
-import useAuth from '../context/auth'
+import useAuth from './useAuth'
 import  { Redirect } from 'react-router-dom'
 
 export default function withAuth(WrappedComponent, props) {

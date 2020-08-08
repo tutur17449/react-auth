@@ -6,8 +6,10 @@ import {
     FormGroup, Label, Input,
     Button,
 } from 'reactstrap'
-import {register} from '../services/auth.service'
+import {register} from '../actions/auth.actions'
 import { toast } from 'react-toastify'
+import useAuth from '../global/useAuth'
+import  { Redirect } from 'react-router-dom'
 
 toast.configure()
 
@@ -16,6 +18,7 @@ export default function Register() {
     const [pseudo, setPseudo] = React.useState('')
     const [email, setEmail] = React.useState('')
     const [password, setPassword] = React.useState('')
+    const {auth, setAuth} = useAuth()
 
     const onSubmit = async (e) => {
         e.preventDefault()
@@ -34,6 +37,10 @@ export default function Register() {
         } catch (e) {
             toast.error(e.message)
         }
+    }
+
+    if(auth.isAuth){
+        return(<Redirect to='/'  />)
     }
 
     return (
